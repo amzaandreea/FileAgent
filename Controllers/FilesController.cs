@@ -14,6 +14,7 @@ namespace FileAgent.Controllers
     public class Path
     {
         public string PathString { get; set; }
+        public string FileName { get; set; }
     }
 
     [ApiController]
@@ -21,7 +22,6 @@ namespace FileAgent.Controllers
     public class FilesController : ControllerBase
     {
         [HttpGet("GetItemsAtPath")]
-        
         public IActionResult GetItemsAtPath([FromBody] Path path)
         {
             List<String> files = Directory.GetFiles(path.PathString).ToList();
@@ -35,6 +35,14 @@ namespace FileAgent.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpGet("DownloadFile")]//sa fim atenti la extensii(e text.txt nu text)
+        public IActionResult DownloadFile([FromBody] Path path)
+        {
+            Byte[] bytes = System.IO.File.ReadAllBytes(path.PathString);
+            string base64 = Convert.ToBase64String(bytes);
+            return Ok(base64);
         }
 
     }
