@@ -12,5 +12,7 @@ namespace FileAgent.Models
 
         [JsonPropertyName("type")]
         public string FileType { get; set; }
+
+        public RequestModel() { }
     }
 }
