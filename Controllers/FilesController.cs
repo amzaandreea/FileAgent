@@ -12,11 +12,11 @@ namespace FileAgent.Controllers
     [Route("[controller]")]
     public class FilesController : ControllerBase
     {
-        [HttpGet("GetItemsAtPath")]
-        public IActionResult GetItemsAtPath([FromBody] RequestModel path)
+        [HttpPost("GetItemsAtPath")]
+        public IActionResult GetItemsAtPath([FromBody] RequestModel reqModel)
         {
-            List<String> files = Directory.GetFiles(path.PathString).ToList();
-            List<String> directories = Directory.GetDirectories(path.PathString).ToList();
+            List<String> files = Directory.GetFiles(reqModel.PathString).ToList();
+            List<String> directories = Directory.GetDirectories(reqModel.PathString).ToList();
             if (files.Count > 0 || directories.Count > 0)
             {
                 ListingModel listingModel = new ListingModel();
@@ -28,7 +28,7 @@ namespace FileAgent.Controllers
             return NotFound();
         }
 
-        [HttpGet("DownloadFile")]//sa fim atenti la extensii(e text.txt nu text)
+        [HttpPost("DownloadFile")]//sa fim atenti la extensii(e text.txt nu text)
         public IActionResult DownloadFile([FromBody] RequestModel reqModel)
         {
             try
