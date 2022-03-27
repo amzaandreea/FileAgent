@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using FileAgent.Models;
 using Microsoft.AspNetCore.Mvc;
+using static FileAgent.Models.ListingModel;
 
 namespace FileAgent.Controllers
 {
@@ -18,7 +19,8 @@ namespace FileAgent.Controllers
         [HttpPost("GetItemsAtPath")]
         public IActionResult GetItemsAtPath([FromBody] RequestModel reqModel)
         {
-            List<String> files = Directory.GetFiles(reqModel.PathString).ToList();
+            DirectoryInfo di = new DirectoryInfo(reqModel.PathString);
+            List<FileInformation> files = di.GetFiles("*", SearchOption.TopDirectoryOnly).Select(f => new FileInformation(f.FullName, (f.Length/1024/1024).ToString())).ToList();
             List<String> directories = Directory.GetDirectories(reqModel.PathString).ToList();
             if (files.Count > 0 || directories.Count > 0)
             {
