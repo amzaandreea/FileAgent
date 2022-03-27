@@ -33,6 +33,12 @@ namespace FileAgent.Controllers
             return NotFound();
         }
 
+        [HttpGet("SimpleGet")]
+        public IActionResult SompleGet()
+        {
+            return Ok("ok");
+        }
+
         [HttpPost("DownloadFile")]//sa fim atenti la extensii(e text.txt nu text)
         public IActionResult DownloadFile([FromBody] RequestModel reqModel)
         {
