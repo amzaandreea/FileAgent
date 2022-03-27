@@ -46,6 +46,11 @@ namespace FileAgent
             {
                 endpoints.MapControllers();
             });
+
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
         }
     }
 }
